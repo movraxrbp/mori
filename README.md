@@ -1,4 +1,4 @@
-# Mori
+# mori
 
 ![hi](assets/logo_small.svg)
 
@@ -14,6 +14,11 @@ and the X session entry. Set `PREFIX`, `DESTDIR`, or `LUA` as needed.
 
 Configuration is trusted Lua with standard libraries enabled. Examples:
 [config/config.lua](config/config.lua), [config/bar.lua](config/bar.lua).
+
+## screenshots
+
+![screenshot](assets/screenshot.png)
+
 
 ## Window manager Lua API
 
