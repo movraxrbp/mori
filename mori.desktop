@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=mori
+Comment=Minimal Lua-configured tiling window manager
+Exec=mori
+Type=Application
+DesktopNames=Mori
