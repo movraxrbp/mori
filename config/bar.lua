@@ -13,7 +13,6 @@ return {
     workspace_foreground = "#aaaaaa",
     workspace_background = "#202020",
     workspace_active_foreground = "#ffffff",
-    workspace_active_background = "#455a64",
     workspace_padding = 4, -- each side of an equal-width slot, 0..256
     workspace_spacing = 2, -- gap between slots, 0..256
     active_symbol = "●", -- empty string keeps the focused workspace's name

@@ -420,9 +420,9 @@ typedef struct {
     bool bottom, tray, show_title;
     int workspace_padding, workspace_spacing, tray_size, tray_spacing, tray_padding;
     char active_symbol[64], title_separator[128];
-    char colors[5][64];
-    XftColor palette[5];
-    bool allocated[5];
+    char colors[4][64];
+    XftColor palette[4];
+    bool allocated[4];
     char font[256], foreground[64], background[64], monitor[128];
     XftFont *fonts;
     XftColor fg, bg;
@@ -491,9 +491,9 @@ static bool boolean(lua_State *L, const char *key, bool fallback) {
     return value;
 }
 
-/* Normal workspace fg/bg, focused workspace fg/bg, tray background. */
+/* Workspace fg/bg, focused workspace fg, tray background. */
 static const char *color_keys[] = {"workspace_foreground", "workspace_background",
-    "workspace_active_foreground", "workspace_active_background", "tray_background"};
+    "workspace_active_foreground", "tray_background"};
 
 static int parse_settings(lua_State *L) {
     Settings *s = lua_touserdata(L, lua_upvalueindex(1));
@@ -504,7 +504,7 @@ static int parse_settings(lua_State *L) {
     field(L, "foreground", s->foreground, sizeof s->foreground, "#eeeeee");
     field(L, "background", s->background, sizeof s->background, "#202020");
     field(L, "monitor", s->monitor, sizeof s->monitor, "");
-    for (int i = 0; i < 5; ++i)
+    for (int i = 0; i < 4; ++i)
         field(L, color_keys[i], s->colors[i], sizeof s->colors[i],
               i == 0 || i == 2 ? s->foreground : s->background);
     s->tray = boolean(L, "tray", true);
@@ -535,7 +535,7 @@ static void release(Settings *s) {
         XftColorFree(dpy, DefaultVisual(dpy, screen), DefaultColormap(dpy, screen), &s->fg);
     if (s->bg_allocated)
         XftColorFree(dpy, DefaultVisual(dpy, screen), DefaultColormap(dpy, screen), &s->bg);
-    for (int i = 0; i < 5; ++i)
+    for (int i = 0; i < 4; ++i)
         if (s->allocated[i])
             XftColorFree(dpy, DefaultVisual(dpy, screen), DefaultColormap(dpy, screen), &s->palette[i]);
     if (s->lua)
@@ -577,7 +577,7 @@ static bool load_settings(Settings *s, bool optional) {
     s->bg_allocated = XftColorAllocName(dpy, visual, cmap, s->background, &s->bg);
     if (!s->bg_allocated)
         goto fail;
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < 4; ++i) {
         s->allocated[i] = XftColorAllocName(dpy, visual, cmap, s->colors[i], &s->palette[i]);
         if (!s->allocated[i])
             goto fail;
@@ -654,7 +654,7 @@ static int draw_workspaces(lua_State *L) {
             lua_pop(L, 1);
             lua_getfield(L, -1, "name");
             const char *name = active && settings.active_symbol[0] ? settings.active_symbol : lua_tostring(L, -1);
-            XftDrawRect(canvas, &settings.palette[active ? 3 : 1], x, 0,
+            XftDrawRect(canvas, &settings.palette[1], x, 0,
                         (unsigned)slot, (unsigned)height);
             if (name) {
                 XGlyphInfo extents;
@@ -949,7 +949,7 @@ int main(int argc, char **argv) {
     XStoreName(dpy, window, "Mori bar");
     bar_tray_init(dpy, screen, window);
     bar_tray_configure(settings.tray, settings.tray_size, settings.tray_spacing,
-                       settings.tray_padding, settings.palette[4].pixel);
+                       settings.tray_padding, settings.palette[3].pixel);
     place();
     XMapWindow(dpy, window);
     draw();
@@ -968,7 +968,7 @@ int main(int argc, char **argv) {
                 settings = next;
                 XSetWindowBackground(dpy, window, settings.bg.pixel);
                 bar_tray_configure(settings.tray, settings.tray_size, settings.tray_spacing,
-                                   settings.tray_padding, settings.palette[4].pixel);
+                                   settings.tray_padding, settings.palette[3].pixel);
                 posx = -1;
                 disconnect();
                 place();
