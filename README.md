@@ -85,7 +85,7 @@ or non-string results fall back to the built-in display.
 | `monitor` | RandR output name; default/unknown selects first output |
 | `font` | Fontconfig pattern; default `monospace` |
 | `foreground`, `background` | X11 color strings; defaults `#eeeeee`, `#202020` |
-| `workspace_foreground`, `workspace_background` | Inactive label foreground and shared workspace background; inherit main colors |
+| `workspace_background` | Shared workspace background; inherits `background` |
 | `workspace_active_foreground` | Focused label foreground; inherits `foreground`. All workspaces use `workspace_background`. |
 | `workspace_padding`, `workspace_spacing` | Integers 0–256; defaults 4, 0 |
 | `active_symbol` | Focused label; default `●`; empty retains workspace name |

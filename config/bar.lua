@@ -10,7 +10,6 @@ return {
     background = "#202020",
 
     -- Built-in workspace/title appearance. Omitted colors inherit foreground/background.
-    workspace_foreground = "#aaaaaa",
     workspace_background = "#202020",
     workspace_active_foreground = "#ffffff",
     workspace_padding = 4, -- each side of an equal-width slot, 0..256
