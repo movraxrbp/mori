@@ -1,5 +1,7 @@
 # Mori
 
+![hi](assets/logo_small.svg)
+
 X11 tiling window manager in C, configured with Lua. Supports RandR monitors,
 tile/monocle/floating layouts, ICCCM size hints, EWMH workspaces and dock struts,
 and a user-session Unix socket for IPC. `mori-bar` is an optional Lua-configurable
